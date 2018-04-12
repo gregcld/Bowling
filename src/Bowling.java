@@ -30,20 +30,8 @@ public class Bowling {
         return sum;
     }
 
-    public static void main(String[] args){
-        Bowling tt = new Bowling();
-        tt.insert(2,6);
-        tt.insert(3,6);
-        tt.insert(1,5);
-        tt.insert(8,2);
-        tt.insert(4,4);
-        tt.insert(4,4);
-        tt.insert(4,4);
-        tt.insert(4,4);
-        tt.insert(4,4);
-        tt.insert(4,4);
-        tt.insert(4,4);
-        System.out.println(tt.sum());
+    public static void main(String[] args) throws Exception{
+
     }
 
 
