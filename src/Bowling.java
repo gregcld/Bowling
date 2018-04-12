@@ -9,20 +9,16 @@ public class Bowling {
         table = new ArrayList<Pair<Integer, Integer>>();
     }
 
-    public void insert(int a, int b){
-        if(a < 0 || b < 0){
-            System.err.println("Les scores doivent être positifs ou nuls");
-            System.exit(0);
-        }
+    public void insert(int a, int b) throws Exception{
+        if(a < 0 || b < 0)
+            throw new Exception("Les scores doivent être positifs ou nuls");
 
-        if(a+b > 10){
-            System.err.println("La somme de deux scores d'une manche doit être inférieure ou égale à 10");
-            System.exit(0);
-        }
-        if(table.size() >= 10){
-            System.err.println("Le jeu ne peut avoir que 10 manches");
-            System.exit(0);
-        }
+        if(a+b > 10)
+            throw new Exception("La somme de deux scores d'une manche doit être inférieure ou égale à 10");
+
+        if(table.size() >= 10)
+            throw new Exception("Le jeu ne peut avoir que 10 manches");
+
         table.add(new Pair<Integer,Integer>(a,b));
     }
 
