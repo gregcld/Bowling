@@ -7,7 +7,7 @@
   <!-- 
   <property name="skip.tests" value="true"/>
    -->
-  
+
   <!-- Compiler options -->
   
   <property name="compiler.debug" value="on"/>
@@ -107,7 +107,7 @@
   </path>
   
   
-  <target name="compile.module.bowling" depends="compile.module.bowling.production,compile.module.bowling.tests" description="Compile module Bowling"/>
+  <target name="compile.module.bowling" depends="compile.module.bowling.production,test" description="Compile module Bowling"/>
   
   <target name="compile.module.bowling.production" description="Compile module Bowling; production classes">
     <mkdir dir="${bowling.output.dir}"/>
@@ -127,7 +127,7 @@
     </copy>
   </target>
   
-  <target name="compile.module.bowling.tests" depends="compile.module.bowling.production" description="compile module Bowling; test classes" unless="skip.tests">
+  <target name="test" depends="compile.module.bowling.production" description="compile module Bowling; test classes" unless="skip.tests">
     <mkdir dir="${bowling.testoutput.dir}"/>
     <javac destdir="${bowling.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.bowling}"/>
