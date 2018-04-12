@@ -94,12 +94,56 @@
     <patternset refid="excluded.from.module.bowling"/>
   </patternset>
   
+  <path id="bowling.module.sourcepath">
+    <dirset dir="${module.bowling.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  <path id="bowling.module.test.sourcepath">
+    <dirset dir="${module.bowling.basedir}">
+      <include name="test"/>
+    </dirset>
+  </path>
+  
   
   <target name="compile.module.bowling" depends="compile.module.bowling.production,compile.module.bowling.tests" description="Compile module Bowling"/>
   
-  <target name="compile.module.bowling.production" description="Compile module Bowling; production classes"/>
+  <target name="compile.module.bowling.production" description="Compile module Bowling; production classes">
+    <mkdir dir="${bowling.output.dir}"/>
+    <javac destdir="${bowling.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.bowling}"/>
+      <bootclasspath refid="bowling.module.bootclasspath"/>
+      <classpath refid="bowling.module.production.classpath"/>
+      <src refid="bowling.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bowling"/>
+    </javac>
+    
+    <copy todir="${bowling.output.dir}">
+      <fileset dir="${module.bowling.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
   
-  <target name="compile.module.bowling.tests" depends="compile.module.bowling.production" description="compile module Bowling; test classes" unless="skip.tests"/>
+  <target name="compile.module.bowling.tests" depends="compile.module.bowling.production" description="compile module Bowling; test classes" unless="skip.tests">
+    <mkdir dir="${bowling.testoutput.dir}"/>
+    <javac destdir="${bowling.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.bowling}"/>
+      <bootclasspath refid="bowling.module.bootclasspath"/>
+      <classpath refid="bowling.module.classpath"/>
+      <src refid="bowling.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.bowling"/>
+    </javac>
+    
+    <copy todir="${bowling.testoutput.dir}">
+      <fileset dir="${module.bowling.basedir}/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
   
   <target name="clean.module.bowling" description="cleanup module">
     <delete dir="${bowling.output.dir}"/>
