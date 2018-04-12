@@ -52,44 +52,59 @@
     <exclude name="**/?*.aj"/>
   </patternset>
   
-  <!-- JDK definitions -->
-  
-  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
-  <path id="jdk.classpath.1.8">
-    <fileset dir="${jdk.home.1.8}">
-      <include name="jre/lib/charsets.jar"/>
-      <include name="jre/lib/deploy.jar"/>
-      <include name="jre/lib/ext/access-bridge-32.jar"/>
-      <include name="jre/lib/ext/cldrdata.jar"/>
-      <include name="jre/lib/ext/dnsns.jar"/>
-      <include name="jre/lib/ext/jaccess.jar"/>
-      <include name="jre/lib/ext/jfxrt.jar"/>
-      <include name="jre/lib/ext/localedata.jar"/>
-      <include name="jre/lib/ext/nashorn.jar"/>
-      <include name="jre/lib/ext/sunec.jar"/>
-      <include name="jre/lib/ext/sunjce_provider.jar"/>
-      <include name="jre/lib/ext/sunmscapi.jar"/>
-      <include name="jre/lib/ext/sunpkcs11.jar"/>
-      <include name="jre/lib/ext/zipfs.jar"/>
-      <include name="jre/lib/javaws.jar"/>
-      <include name="jre/lib/jce.jar"/>
-      <include name="jre/lib/jfr.jar"/>
-      <include name="jre/lib/jfxswt.jar"/>
-      <include name="jre/lib/jsse.jar"/>
-      <include name="jre/lib/management-agent.jar"/>
-      <include name="jre/lib/plugin.jar"/>
-      <include name="jre/lib/resources.jar"/>
-      <include name="jre/lib/rt.jar"/>
-    </fileset>
-  </path>
-  
-  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
-  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
-  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
-  
   <!-- Modules -->
   
-  <import file="${basedir}/module_bowling.xml"/>
+  
+  <!-- Module Bowling -->
+  
+  <dirname property="module.bowling.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.bowling" value="-encoding UTF-8 -source 9 -target 9 ${compiler.args}"/>
+  
+  <property name="bowling.output.dir" value="${module.bowling.basedir}/out/production/Bowling"/>
+  <property name="bowling.testoutput.dir" value="${module.bowling.basedir}/out/test/Bowling"/>
+  
+  <path id="bowling.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="bowling.module.production.classpath"/>
+  
+  <path id="bowling.runtime.production.module.classpath">
+    <pathelement location="${bowling.output.dir}"/>
+  </path>
+  
+  <path id="bowling.module.classpath">
+    <pathelement location="${bowling.output.dir}"/>
+  </path>
+  
+  <path id="bowling.runtime.module.classpath">
+    <pathelement location="${bowling.testoutput.dir}"/>
+    <pathelement location="${bowling.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.bowling">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.bowling">
+    <patternset refid="excluded.from.module.bowling"/>
+  </patternset>
+  
+  
+  <target name="compile.module.bowling" depends="compile.module.bowling.production,compile.module.bowling.tests" description="Compile module Bowling"/>
+  
+  <target name="compile.module.bowling.production" description="Compile module Bowling; production classes"/>
+  
+  <target name="compile.module.bowling.tests" depends="compile.module.bowling.production" description="compile module Bowling; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.bowling" description="cleanup module">
+    <delete dir="${bowling.output.dir}"/>
+    <delete dir="${bowling.testoutput.dir}"/>
+  </target>
   
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
