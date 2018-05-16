@@ -61,7 +61,7 @@
 
 
 
-  <property name="compiler.args.bowling" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  <property name="compiler.args.bowling" value="-encoding UTF-8 -source 1.8 -target 1.8 ${compiler.args}"/>
 
   <property name="bowling.output.dir" value="${module.bowling.basedir}/out/production/Bowling"/>
   <property name="bowling.testoutput.dir" value="${module.bowling.basedir}/out/test/Bowling"/>
