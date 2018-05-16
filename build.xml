@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="bowling" default="all">
-  
-  
+
+
   <property file="build.properties"/>
   <!-- Uncomment the following property if no tests compilation is needed -->
   <!-- 
@@ -9,7 +9,7 @@
    -->
 
   <!-- Compiler options -->
-  
+
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
   <property name="compiler.args" value=""/>
@@ -51,64 +51,64 @@
     <exclude name="**/?*.clj"/>
     <exclude name="**/?*.aj"/>
   </patternset>
-  
+
   <!-- Modules -->
-  
-  
+
+
   <!-- Module Bowling -->
-  
+
   <dirname property="module.bowling.basedir" file="${ant.file}"/>
-  
-  
-  
+
+
+
   <property name="compiler.args.bowling" value="-encoding UTF-8 -source 9 -target 9 ${compiler.args}"/>
-  
+
   <property name="bowling.output.dir" value="${module.bowling.basedir}/out/production/Bowling"/>
   <property name="bowling.testoutput.dir" value="${module.bowling.basedir}/out/test/Bowling"/>
-  
+
   <path id="bowling.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
   </path>
-  
+
   <path id="bowling.module.production.classpath"/>
-  
+
   <path id="bowling.runtime.production.module.classpath">
     <pathelement location="${bowling.output.dir}"/>
   </path>
-  
+
   <path id="bowling.module.classpath">
     <pathelement location="${bowling.output.dir}"/>
   </path>
-  
+
   <path id="bowling.runtime.module.classpath">
     <pathelement location="${bowling.testoutput.dir}"/>
     <pathelement location="${bowling.output.dir}"/>
   </path>
-  
-  
+
+
   <patternset id="excluded.from.module.bowling">
     <patternset refid="ignored.files"/>
   </patternset>
-  
+
   <patternset id="excluded.from.compilation.bowling">
     <patternset refid="excluded.from.module.bowling"/>
   </patternset>
-  
+
   <path id="bowling.module.sourcepath">
     <dirset dir="${module.bowling.basedir}">
       <include name="src"/>
     </dirset>
   </path>
-  
+
   <path id="bowling.module.test.sourcepath">
     <dirset dir="${module.bowling.basedir}">
       <include name="test"/>
     </dirset>
   </path>
-  
-  
+
+
   <target name="compile.module.bowling" depends="compile.module.bowling.production,test" description="Compile module Bowling"/>
-  
+
   <target name="compile.module.bowling.production" description="Compile module Bowling; production classes">
     <mkdir dir="${bowling.output.dir}"/>
     <javac destdir="${bowling.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
@@ -118,7 +118,7 @@
       <src refid="bowling.module.sourcepath"/>
       <patternset refid="excluded.from.compilation.bowling"/>
     </javac>
-    
+
     <copy todir="${bowling.output.dir}">
       <fileset dir="${module.bowling.basedir}/src">
         <patternset refid="compiler.resources"/>
@@ -126,7 +126,7 @@
       </fileset>
     </copy>
   </target>
-  
+
   <target name="test" depends="compile.module.bowling.production" description="compile module Bowling; test classes" unless="skip.tests">
     <mkdir dir="${bowling.testoutput.dir}"/>
     <javac destdir="${bowling.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
@@ -136,7 +136,7 @@
       <src refid="bowling.module.test.sourcepath"/>
       <patternset refid="excluded.from.compilation.bowling"/>
     </javac>
-    
+
     <copy todir="${bowling.testoutput.dir}">
       <fileset dir="${module.bowling.basedir}/test">
         <patternset refid="compiler.resources"/>
@@ -144,19 +144,19 @@
       </fileset>
     </copy>
   </target>
-  
+
   <target name="clean.module.bowling" description="cleanup module">
     <delete dir="${bowling.output.dir}"/>
     <delete dir="${bowling.testoutput.dir}"/>
   </target>
-  
+
   <target name="init" description="Build initialization">
     <!-- Perform any build initialization in this target -->
   </target>
-  
+
   <target name="clean" depends="clean.module.bowling" description="cleanup all"/>
-  
+
   <target name="build.modules" depends="init, clean, compile.module.bowling" description="build all modules"/>
-  
+
   <target name="all" depends="build.modules" description="build all"/>
 </project>
