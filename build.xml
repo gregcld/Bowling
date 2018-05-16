@@ -13,6 +13,7 @@
   <property name="compiler.debug" value="on"/>
   <property name="compiler.generate.no.warnings" value="off"/>
   <property name="compiler.args" value=""/>
+  <property name="lib.dir" value="./lib"/>
   <property name="compiler.max.memory" value="700m"/>
   <patternset id="ignored.files">
     <exclude name="**/*.hprof/**"/>
@@ -86,6 +87,14 @@
   </path>
 
 
+
+  <path id="classpath.test">
+    <pathelement location="${lib.dir}/apiguardian-api-1.0.0.jar"/>
+    <pathelement location="${lib.dir}/junit-jupiter-api-5.0.0.jar"/>
+    <pathelement location="${lib.dir}/junit-platform-commons-1.0.0.jar"/>
+    <pathelement location="${lib.dir}/opentest4j-1.0.0.jar"/>
+  </path>
+
   <patternset id="excluded.from.module.bowling">
     <patternset refid="ignored.files"/>
   </patternset>
@@ -115,6 +124,8 @@
       <compilerarg line="${compiler.args.bowling}"/>
       <bootclasspath refid="bowling.module.bootclasspath"/>
       <classpath refid="bowling.module.production.classpath"/>
+      <classpath refid="classpath.test"/>
+
       <src refid="bowling.module.sourcepath"/>
       <patternset refid="excluded.from.compilation.bowling"/>
     </javac>
@@ -133,6 +144,7 @@
       <compilerarg line="${compiler.args.bowling}"/>
       <bootclasspath refid="bowling.module.bootclasspath"/>
       <classpath refid="bowling.module.classpath"/>
+      <classpath refid="classpath.test"/>
       <src refid="bowling.module.test.sourcepath"/>
       <patternset refid="excluded.from.compilation.bowling"/>
     </javac>
