@@ -14,6 +14,16 @@ public class Bowling {
         table.add(new Tuple(a,b));
     }
 
+    public void bonusShot(int c) throws Exception{
+        if(table.size() != 10)
+            throw new Exception("Le lancer bonus ne peut intervenir qu'à la 10eme manche");
+
+        if(table.get(9).getX() == 10 || table.get(9).getY() == 10 || table.get(9).getX() + table.get(9).getY() == 10)
+            table.get(9).setZ(c);
+        else
+            throw new Exception("Pas de bonus sans spare ni strike");
+    }
+
     public int sum(){
         int sum = 0;
         boolean spare = false, strike = false;
